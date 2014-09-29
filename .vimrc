@@ -28,6 +28,8 @@ Plugin 'lilydjwg/colorizer'
 Plugin 'mileszs/ack.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'godlygeek/tabular'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'jiangmiao/auto-pairs'
 " vim-snippets & dependencies
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -37,17 +39,6 @@ Plugin 'honza/vim-snippets'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
 " remove toolbar, left and right scrollbar
 set guioptions-=T
@@ -68,6 +59,9 @@ color codeschool
 if has("gui_running")
   set lines=100 columns=200
 endif
+
+" allow for hidden unsaved files
+set hidden
 
 " set file numbers on left
 set number
@@ -140,17 +134,22 @@ map <C-Tab> :bn<CR>
 map <C-S-Tab> :bp<CR>
 map <C-F4> :bp<bar>sp<bar>bn<bar>bd<CR>
 
+" right glutter
 set colorcolumn=130
 
-" Enable filetype-specific indenting and plugins
-filetype plugin indent on
+" tab configuration
+set autoindent shiftwidth=2 softtabstop=2 expandtab
 
-augroup myfiletypes
-	" clear old autocmds in group
-	autocmd!
-	" autoindent with two spaces, always expand tabs
-	autocmd FileType ruby,eruby,yaml,markdown set autoindent shiftwidth=2 softtabstop=2 expandtab
-augroup END
+" searching
+set ignorecase
+set smartcase
+set incsearch
+
+" show matching bracets
+set showmatch
+
+" performance improvement
+set lazyredraw
 
 " start nerdtree
 autocmd VimEnter * NERDTree
