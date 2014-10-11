@@ -30,6 +30,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'godlygeek/tabular'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'jelera/vim-javascript-syntax'
 " vim-snippets & dependencies
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -155,7 +156,18 @@ set lazyredraw
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
-" performance improvement
-"set foldmethod=indent
-"set foldlevel=50
+set foldmethod=syntax
+set foldlevel=50
+
+" performance improvement - folding
+" don't screw up folds when inserting text that might affect them, until leaving insert mode. Foldmethod is local to the window.
+" protect against screwing up folding when switching between windows.
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
+" put swap files there
+set directory^=~/.vim/swaps//
+
+" folding for javascript syntax
+au FileType javascript call JavaScriptFold()
 
